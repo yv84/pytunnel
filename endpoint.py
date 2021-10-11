@@ -21,15 +21,22 @@ def main(server, local):
 
     while True:
         if not connected:
+            print("not connected")
             try:
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)                
+                s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                # KEEP ALIVE WINDOWS
+                s.setsockopt( socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
                 s.connect(server)
                 s.settimeout(None)
                 lastping = time.time()
             except Exception as e:
+                print("connect error")
+                print(e)
                 time.sleep(5)
                 continue
+            print("connected")
+            print(s)
             connected = True
 
         r = [s]
@@ -45,10 +52,10 @@ def main(server, local):
         # reconnect if we go too long with out a ping, the keepalive
         # was a little too platform specific so it was easier just to
         # add support right into the tunnel protocol instead -kmcg
-        if time.time() - lastping > 20:
-            connected = False
-            s.close()
-            continue
+        #if time.time() - lastping > 20:
+        #    connected = False
+        #    s.close()
+        #    continue
 
         if t in r:
             data = t.recv(4096)
