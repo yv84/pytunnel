@@ -91,9 +91,9 @@ localhost or another computer accessable for example 192.168.1.10 could be a loc
 
 The arguments:
     
+     [client]   <application> <server-host>:<client-port>
      [server]   python3 server.py <tunnel-port> <client-port>
-     [endpoint] python3 endpoint.py <target-host>:<target-port> <server-host>:<tunnel-port>
-     [client]   <application> <server-host>:<tunnel-port>
+     [endpoint] python3 endpoint.py <server-host>:<tunnel-port> <target-host>:<target-port>
 
 
 _The server simply needs a port to listen on for the endpoint (`tunnel-port`), and a port
